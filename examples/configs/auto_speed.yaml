@@ -1,0 +1,32 @@
+seed: 1337
+device: "cuda"
+
+# "auto" will detect OS support (disable on Windows) and GPU capabilities (enable TF32/BF16 on Ampere)
+precision: "auto" 
+
+tf32_matmul_precision: "high"
+cudnn_benchmark: true
+
+channels_last: false
+
+amp:
+  enabled: true
+  grad_scaler: true
+  autocast_cache_enabled: true
+
+optimizer:
+  name: "adamw"
+  # Let's see if we can auto-detect this too? Not yet implemented in auto_config but safe defaults exist.
+  lr: 0.0003
+  weight_decay: 0.01
+  fused: false # Conservative default for Windows
+
+compile:
+  enabled: "auto" # This is the key test: should become False on Windows
+  backend: "inductor"
+  mode: "max-autotune"
+  
+train:
+  epochs: 1
+  steps_per_epoch: 100
+  batch_size: 512

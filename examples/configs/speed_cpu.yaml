@@ -1,0 +1,44 @@
+seed: 1337
+
+device: "cpu"
+precision: "fp32"
+
+tf32_matmul_precision: "high"
+
+cudnn_benchmark: false
+deterministic: false
+
+channels_last: false
+
+amp:
+  enabled: false
+  grad_scaler: false
+  autocast_cache_enabled: false
+
+optimizer:
+  name: "adamw"
+  lr: 0.0003
+  weight_decay: 0.01
+  fused: false
+  foreach: null
+
+compile:
+  enabled: false
+  backend: "inductor"
+  mode: "default"
+  fullgraph: false
+  dynamic: false
+
+sdp:
+  enable_flash: false
+  enable_mem_efficient: false
+  enable_math: true
+  enable_cudnn: false
+
+train:
+  epochs: 1
+  steps_per_epoch: 10
+  batch_size: 4
+  grad_accum_steps: 1
+  clip_grad_norm: 1.0
+  log_every: 2
